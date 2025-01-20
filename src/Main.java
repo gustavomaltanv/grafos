@@ -1,4 +1,6 @@
 import algoritmo.Dijkstra;
+import algoritmo.Kruskal;
+import algoritmo.Prim;
 import model.Grafo;
 import model.Vertice;
 import model.Aresta;
@@ -176,7 +178,9 @@ public class Main {
             System.out.println("1 - Visualizar grafo");
             System.out.println("2 - Editar grafo");
             System.out.println("3 - Algoritmo: Dijkstra");
-            System.out.println("4 - Voltar");
+            System.out.println("4 - Algoritmo: Prim");
+            System.out.println("5 - Algoritmo: Kruskal");
+            System.out.println("6 - Voltar");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine(); // Consome a nova linha
@@ -190,8 +194,14 @@ public class Main {
                     break;
                 case 3:
                     executarDijkstra(scanner, grafo);
-                    return;
+                    break;
                 case 4:
+                    executarPrim(scanner, grafo);
+                    break;
+                case 5:
+                    executarKruskal(scanner, grafo);
+                    break;
+                case 6:
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -311,5 +321,29 @@ public class Main {
         Dijkstra dijkstra = new Dijkstra();
         dijkstra.executar(grafo, verticeOrigem);
     }
+
+    private static void executarPrim(Scanner scanner, Grafo grafo) {
+        System.out.print("Digite o rótulo do vértice de origem: ");
+        String origem = scanner.nextLine();
+
+        Vertice verticeOrigem = grafo.getVertices().stream()
+                .filter(v -> v.getRotulo().equals(origem))
+                .findFirst()
+                .orElse(null);
+
+        if (verticeOrigem == null) {
+            System.out.println("Vértice de origem não encontrado.");
+            return;
+        }
+
+        Prim prim = new Prim();
+        prim.executar(grafo, verticeOrigem);
+    }
+
+    private static void executarKruskal(Scanner scanner, Grafo grafo) {
+        Kruskal kruskal = new Kruskal();
+        kruskal.executar(grafo);
+    }
+
 
 }
