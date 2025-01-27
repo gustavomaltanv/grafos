@@ -30,8 +30,8 @@ public class DotFileReader {
                     grafo = new Grafo(nomeGrafo, direcionado);
                 } else if (line.contains("--") || line.contains("->")) {
                     String[] parts = line.split(direcionado ? "->" : "--");
-                    String origem = parts[0].trim();
-                    String destino = parts[1].split("\\[")[0].trim();
+                    String origem = parts[0].trim().replace(";", "");
+                    String destino = parts[1].split("\\[")[0].trim().replace(";","");
                     double peso = 1.0;
 
                     if (line.contains("label")) {

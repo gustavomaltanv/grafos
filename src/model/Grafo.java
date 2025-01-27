@@ -37,7 +37,7 @@ public class Grafo {
     }
 
     public void addVertice(Vertice vertice) {
-        vertices.add(vertice);
+        this.vertices.add(vertice);
     }
 
     public List<Aresta> getArestas() {
@@ -45,6 +45,20 @@ public class Grafo {
     }
 
     public void addAresta(Aresta aresta) {
-        arestas.add(aresta);
+        this.arestas.add(aresta);
+        aresta.getOrigem().adicionarAresta(aresta);
+        if(!this.direcionado) {
+            aresta.getDestino().adicionarAresta(new Aresta(aresta.getDestino(), aresta.getOrigem(), aresta.getPeso()));
+        }
+    }
+
+    public void removerAresta(Aresta aresta) {
+        arestas.remove(aresta);
+        aresta.getOrigem().removerAresta(aresta);
+    }
+
+    public Aresta encontrarAresta(String origem, String destino) {
+        return arestas.stream().filter(a -> a.getOrigem().getRotulo().equals(origem) &&
+                a.getDestino().getRotulo().equals(destino)).findFirst().orElse(null);
     }
 }

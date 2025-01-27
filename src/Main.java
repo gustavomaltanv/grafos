@@ -116,9 +116,15 @@ public class Main {
                     System.out.print("Digite o rótulo do vértice de destino da aresta a remover: ");
                     String destinoRemover = scanner.nextLine();
 
-                    grafo.getArestas().removeIf(a -> a.getOrigem().getRotulo().equals(origemRemover) &&
-                            a.getDestino().getRotulo().equals(destinoRemover));
-                    System.out.println("Aresta removida com sucesso!");
+                    Aresta arestaRemover = grafo.encontrarAresta(origemRemover, destinoRemover);
+                    if (arestaRemover != null) {
+                        grafo.removerAresta(arestaRemover);
+                        System.out.println("Aresta removida com sucesso!");
+                    }
+                    else {
+                        System.out.println("Aresta não encontrada.");
+                    }
+
                     break;
                 case 5:
                     DotFileWriter.salvarGrafo(grafo);
@@ -318,9 +324,23 @@ public class Main {
             return;
         }
 
+        System.out.print("Digite o rótulo do vértice de destino: ");
+        String destino = scanner.nextLine();
+
+        Vertice verticeDestino = grafo.getVertices().stream()
+                .filter(v -> v.getRotulo().equals(destino))
+                .findFirst()
+                .orElse(null);
+
+        if (verticeDestino == null) {
+            System.out.println("Vértice de destino não encontrado.");
+            return;
+        }
+
         Dijkstra dijkstra = new Dijkstra();
-        dijkstra.executar(grafo, verticeOrigem);
+        dijkstra.executar(grafo, verticeOrigem, verticeDestino);
     }
+
 
     private static void executarPrim(Scanner scanner, Grafo grafo) {
         System.out.print("Digite o rótulo do vértice de origem: ");

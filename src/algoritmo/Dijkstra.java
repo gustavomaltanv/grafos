@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Dijkstra {
 
-    public void executar(Grafo grafo, Vertice origem) {
+    public void executar(Grafo grafo, Vertice origem, Vertice destino) {
         Map<Vertice, Double> distancias = new HashMap<>();
         Map<Vertice, Vertice> anteriores = new HashMap<>();
         PriorityQueue<Vertice> fila = new PriorityQueue<>(Comparator.comparing(distancias::get));
@@ -23,23 +23,35 @@ public class Dijkstra {
         while (!fila.isEmpty()) {
             Vertice verticeAtual = fila.poll();
 
-            for (Aresta aresta : grafo.getArestas()) {
-                if (aresta.getOrigem().equals(verticeAtual)) {
-                    Vertice vizinho = aresta.getDestino();
-                    double novaDistancia = distancias.get(verticeAtual) + aresta.getPeso();
+            for (Aresta aresta : verticeAtual.getArestas()) {
+                Vertice vizinho = aresta.getDestino();
+                double novaDistancia = distancias.get(verticeAtual) + aresta.getPeso();
 
-                    if (novaDistancia < distancias.get(vizinho)) {
-                        distancias.put(vizinho, novaDistancia);
-                        anteriores.put(vizinho, verticeAtual);
-                        fila.add(vizinho);
-                    }
+                if (novaDistancia < distancias.get(vizinho)) {
+                    distancias.put(vizinho, novaDistancia);
+                    anteriores.put(vizinho, verticeAtual);
+                    fila.add(vizinho);
                 }
             }
         }
 
-        System.out.println("Distâncias a partir do vértice " + origem.getRotulo() + ":");
-        for (Vertice vertice : distancias.keySet()) {
-            System.out.println("Até " + vertice.getRotulo() + " : " + distancias.get(vertice));
+        // Imprime o caminho e a distância até o destino
+        if (distancias.get(destino) != Double.MAX_VALUE) {
+            System.out.println("Caminho do vértice " + origem.getRotulo() + " até o vértice " + destino.getRotulo() + ":");
+            List<Vertice> caminho = new LinkedList<>();
+            for (Vertice vertice = destino; vertice != null; vertice = anteriores.get(vertice)) {
+                caminho.add(vertice);
+            }
+            Collections.reverse(caminho);
+            for (int i = 0; i < caminho.size(); i++) {
+                System.out.print(caminho.get(i).getRotulo());
+                if (i < caminho.size() - 1) {
+                    System.out.print(" -> ");
+                }
+            }
+            System.out.println(" - Distância: " + distancias.get(destino));
+        } else {
+            System.out.println("Não há caminho do vértice " + origem.getRotulo() + " até o vértice " + destino.getRotulo());
         }
     }
 }
