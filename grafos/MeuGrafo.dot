@@ -1,0 +1,10 @@
+digraph MeuGrafo {
+    a;
+    b;
+    c;
+    d;
+    e;
+    f;
+    a -> b [label="1.0"];
+    b -> c [label="1.0"];
+}

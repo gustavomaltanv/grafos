@@ -61,4 +61,18 @@ public class Grafo {
         return arestas.stream().filter(a -> a.getOrigem().getRotulo().equals(origem) &&
                 a.getDestino().getRotulo().equals(destino)).findFirst().orElse(null);
     }
+
+    public int getOrdem() {
+        return arestas.size();
+    }
+
+    public int getGrau(Vertice vertice) {
+        if(this.direcionado) {
+            return (int) this.arestas.stream().filter(a -> a.getDestino().equals(vertice)
+                    || a.getOrigem().equals(vertice) ).count();
+        }
+        else {
+            return vertice.getArestas().size();
+        }
+    }
 }

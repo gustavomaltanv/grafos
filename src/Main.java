@@ -1,5 +1,6 @@
 import algoritmo.Dijkstra;
 import algoritmo.Kruskal;
+import algoritmo.Malgrange;
 import algoritmo.Prim;
 import model.Grafo;
 import model.Vertice;
@@ -186,7 +187,8 @@ public class Main {
             System.out.println("3 - Algoritmo: Dijkstra");
             System.out.println("4 - Algoritmo: Prim");
             System.out.println("5 - Algoritmo: Kruskal");
-            System.out.println("6 - Voltar");
+            System.out.println("6 - Algoritmo: Malgrange");
+            System.out.println("7 - Voltar");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine(); // Consome a nova linha
@@ -208,6 +210,9 @@ public class Main {
                     executarKruskal(scanner, grafo);
                     break;
                 case 6:
+                    executarMalgrange(scanner, grafo);
+                    break;
+                case 7:
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -216,10 +221,10 @@ public class Main {
     }
 
     private static void visualizarGrafo(Grafo grafo) {
-        System.out.println("Grafo: " + grafo.getNome());
+        System.out.println("Grafo: " + grafo.getNome() + " (ordem: " + grafo.getOrdem() + ")");
         System.out.println("Vertices:");
         for (Vertice vertice : grafo.getVertices()) {
-            System.out.println(" " + vertice.getRotulo());
+            System.out.println(" " + vertice.getRotulo() + " (grau: " + grafo.getGrau(vertice) + ")");
         }
         System.out.println("Arestas:");
         for (Aresta aresta : grafo.getArestas()) {
@@ -365,5 +370,9 @@ public class Main {
         kruskal.executar(grafo);
     }
 
+    private static void executarMalgrange(Scanner scanner, Grafo grafo) {
+        Malgrange malgrange = new Malgrange();
+        malgrange.executar(grafo);
+    }
 
 }
