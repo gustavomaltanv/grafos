@@ -1,6 +1,10 @@
-graph graphname {
-     e ;
-     a -- b [label="1.5"];
-     b -- c [label="2.2"];
-     b -- d [label="3.0"];
-   }
+graph graph_1 {
+    e [color="red"];
+    a [color="red"];
+    b [color="blue"];
+    c [color="red"];
+    d [color="red"];
+    a -- b [label="1.5" color="red"];
+    b -- c [label="2.2" color="blue"];
+    b -- d [label="3.0" color="green"];
+}

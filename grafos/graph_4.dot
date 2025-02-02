@@ -1,17 +1,23 @@
-graph {
-    a -- b;
-    b -- c;
-    c -- d;
-    d -- e;
-    e -- f;
-    a -- f;
-    a -- c;
-    a -- d;
-    a -- e;
-    b -- d;
-    b -- e;
-    b -- f;
-    c -- e;
-    c -- f;
-    d -- f;
+graph graph_4 {
+    a [color="red"];
+    b [color="blue"];
+    c [color="green"];
+    d [color="yellow"];
+    e [color="black"];
+    f [color="gray"];
+    a -- b [color="red"];
+    b -- c [color="blue"];
+    c -- d [color="green"];
+    d -- e [color="yellow"];
+    e -- f [color="black"];
+    a -- f [color="gray"];
+    a -- c [color="magenta"];
+    a -- d [color="cyan"];
+    a -- e [color="orange"];
+    b -- d [color="purple"];
+    b -- e [color="brown"];
+    b -- f [color="pink"];
+    c -- e [color="lime"];
+    c -- f [color="navy"];
+    d -- f [color="teal"];
 }

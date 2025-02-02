@@ -1,4 +1,4 @@
-graph {
+graph graph_3 {
     a -- b;
     b -- c;
     a -- c;

@@ -1,0 +1,10 @@
+graph graphname {
+    e [color="red"];
+    a [color="red"];
+    b [color="blue"];
+    c [color="red"];
+    d [color="red"];
+    a -- b [label="1.5"];
+    b -- c [label="2.2"];
+    b -- d [label="3.0"];
+}

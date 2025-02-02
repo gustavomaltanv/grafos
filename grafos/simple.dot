@@ -1,4 +1,4 @@
-digraph G {
+digraph simple {
 A -> B;
 A -> C;
 }
