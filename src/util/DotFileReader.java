@@ -1,5 +1,6 @@
 package util;
 
+import model.Cor;
 import model.Grafo;
 import model.Aresta;
 import model.Vertice;
@@ -7,6 +8,8 @@ import model.Vertice;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DotFileReader {
 
@@ -16,6 +19,7 @@ public class DotFileReader {
             boolean direcionado = false;
             String nomeGrafo = "";
             Grafo grafo = null;
+            Set<String> verticesLidos = new HashSet<>();
 
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
@@ -33,9 +37,13 @@ public class DotFileReader {
                     String origem = parts[0].trim().replace(";", "");
                     String destino = parts[1].split("\\[")[0].trim().replace(";","");
                     double peso = 1.0;
+                    Cor corAresta = null;
 
                     if (line.contains("label")) {
                         peso = Double.parseDouble(line.split("label=\"")[1].split("\"")[0]);
+                    }
+                    if (line.contains("color")) {
+                        corAresta = Cor.valueOf(line.split("color=\"")[1].split("\"")[0].toUpperCase());
                     }
 
                     final Grafo grafoFinal = grafo;
@@ -58,11 +66,18 @@ public class DotFileReader {
                             });
 
                     Aresta aresta = new Aresta(verticeOrigem, verticeDestino, peso);
+                    aresta.setCorAresta(corAresta);
                     grafo.addAresta(aresta);
                 } else if (line.endsWith(";")) {
                     String vertice = line.replace(";", "").trim();
-                    Vertice v = new Vertice(vertice);
-                    grafo.addVertice(v);
+                    if (!verticesLidos.contains(vertice)) {
+                        Vertice v = new Vertice(vertice);
+                        grafo.addVertice(v);
+                        if (line.contains("color")) {
+                            v.setCorVertice(Cor.valueOf(line.split("color=\"")[1].split("\"")[0].toUpperCase()));
+                        }
+                        verticesLidos.add(vertice);
+                    }
                 }
             }
 

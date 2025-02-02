@@ -6,10 +6,12 @@ import java.util.List;
 public class Vertice {
     private String rotulo;
     private List<Aresta> arestas;
+    private Cor corVertice;
 
     public Vertice(String rotulo) {
         this.rotulo = rotulo;
         this.arestas = new ArrayList<>();
+        this.corVertice = null;
     }
 
     public String getRotulo() {
@@ -30,5 +32,13 @@ public class Vertice {
 
     public void removerAresta(Aresta aresta) {
         this.arestas.remove(aresta);
+    }
+
+    public Cor getCorVertice() {
+        return corVertice;
+    }
+
+    public void setCorVertice(Cor corVertice) {
+        this.corVertice = corVertice;
     }
 }

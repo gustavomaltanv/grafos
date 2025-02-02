@@ -1,7 +1,4 @@
-import algoritmo.Dijkstra;
-import algoritmo.Kruskal;
-import algoritmo.Malgrange;
-import algoritmo.Prim;
+import algoritmo.*;
 import model.Grafo;
 import model.Vertice;
 import model.Aresta;
@@ -25,7 +22,7 @@ public class Main {
             System.out.println("3 - Sair");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consome a nova linha
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -50,7 +47,7 @@ public class Main {
         String nome = scanner.nextLine();
         System.out.print("O grafo é direcionado? (true/false): ");
         boolean direcionado = scanner.nextBoolean();
-        scanner.nextLine(); // Consome a nova linha
+        scanner.nextLine();
 
         Grafo grafo = new Grafo(nome, direcionado);
         grafos.add(grafo);
@@ -68,7 +65,7 @@ public class Main {
             System.out.println("6 - Voltar");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consome a nova linha
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -91,7 +88,7 @@ public class Main {
                     String destino = scanner.nextLine();
                     System.out.print("Digite o peso da aresta: ");
                     double peso = scanner.nextDouble();
-                    scanner.nextLine(); // Consome a nova linha
+                    scanner.nextLine();
 
                     Vertice verticeOrigem = grafo.getVertices().stream()
                             .filter(v -> v.getRotulo().equals(origem))
@@ -159,7 +156,7 @@ public class Main {
             }
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consome a nova linha
+            scanner.nextLine();
 
             if (opcao > 0 && opcao <= listOfFiles.length) {
                 String nomeArquivo = listOfFiles[opcao - 1].getName();
@@ -188,10 +185,11 @@ public class Main {
             System.out.println("4 - Algoritmo: Prim");
             System.out.println("5 - Algoritmo: Kruskal");
             System.out.println("6 - Algoritmo: Malgrange");
-            System.out.println("7 - Voltar");
+            System.out.println("7 - Menu: Coloracao");
+            System.out.println("8 - Voltar");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
-            scanner.nextLine(); // Consome a nova linha
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -213,6 +211,7 @@ public class Main {
                     executarMalgrange(scanner, grafo);
                     break;
                 case 7:
+                    menuColoracao(scanner, grafo);
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -373,6 +372,54 @@ public class Main {
     private static void executarMalgrange(Scanner scanner, Grafo grafo) {
         Malgrange malgrange = new Malgrange();
         malgrange.executar(grafo);
+    }
+
+    private static void menuColoracao(Scanner scanner, Grafo grafo) {
+        boolean grafoSalvo = false;
+
+        while (true) {
+            System.out.println("Menu de Coloração:");
+            System.out.println("1 - Coloração de Vértices");
+            System.out.println("2 - Coloração de Arestas");
+            System.out.println("3 - Salvar grafo");
+            System.out.println("4 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    executarColoracaoVertices(scanner, grafo);
+                    break;
+                case 2:
+                    executarColoracaoArestas(scanner, grafo);
+                    break;
+                case 3:
+                    DotFileWriter.salvarGrafo(grafo);
+                    System.out.println("Grafo salvo com sucesso!");
+                    grafoSalvo = true;
+                    break;
+                case 4:
+                    if (!grafoSalvo) {
+                        System.out.println("Alterações não salvas.");
+                    }
+                    return;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    private static void executarColoracaoVertices(Scanner scanner, Grafo grafo) {
+        Coloracao coloracao = new Coloracao();
+        coloracao.coloracaoVertices(grafo);
+        System.out.println("Vertices coloridos com sucesso!");
+    }
+
+    private static void executarColoracaoArestas(Scanner scanner, Grafo grafo) {
+        Coloracao coloracao = new Coloracao();
+        coloracao.coloracaoArestas(grafo);
+        System.out.println("Arestas coloridas com sucesso!");
     }
 
 }
