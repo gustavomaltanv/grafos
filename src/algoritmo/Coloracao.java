@@ -13,7 +13,6 @@ public class Coloracao {
         for (Vertice vertice : grafo.getVertices()) {
             Set<Cor> coresAdjacentes = new HashSet<>();
 
-            // Considera as cores dos vértices adjacentes (de entrada e saída)
             for (Aresta aresta : vertice.getArestas()) {
                 Vertice adjacente = aresta.getDestino().equals(vertice) ? aresta.getOrigem() : aresta.getDestino();
                 if (adjacente.getCorVertice() != null) {
@@ -21,7 +20,6 @@ public class Coloracao {
                 }
             }
 
-            // Adiciona as cores dos vértices com arestas de entrada (se o grafo for direcionado)
             for (Aresta aresta : grafo.getArestas()) {
                 if (aresta.getDestino().equals(vertice)) {
                     Vertice adjacente = aresta.getOrigem();
@@ -30,7 +28,6 @@ public class Coloracao {
                     }
                 }
             }
-
             vertice.setCorVertice(encontrarMenorCorDisponivel(coresAdjacentes));
         }
     }
