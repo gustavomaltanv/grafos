@@ -186,7 +186,8 @@ public class Main {
             System.out.println("5 - Algoritmo: Kruskal");
             System.out.println("6 - Algoritmo: Malgrange");
             System.out.println("7 - Menu: Coloracao");
-            System.out.println("8 - Voltar");
+            System.out.println("8 - Menu: Busca BFS e DFS");
+            System.out.println("9 - Voltar");
             System.out.print("Escolha uma opção: ");
             int opcao = scanner.nextInt();
             scanner.nextLine();
@@ -212,6 +213,11 @@ public class Main {
                     break;
                 case 7:
                     menuColoracao(scanner, grafo);
+                    return;
+                case 8:
+                    menuBusca(scanner, grafo);
+                    return;
+                case 9:
                     return;
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
@@ -422,4 +428,66 @@ public class Main {
         System.out.println("Arestas coloridas com sucesso!");
     }
 
+    private static void menuBusca(Scanner scanner, Grafo grafo) {
+        boolean grafoSalvo = false;
+
+        while (true) {
+            System.out.println("Menu de Coloração:");
+            System.out.println("1 - Busca de Profundidade");
+            System.out.println("2 - Busca de Largura");
+            System.out.println("3 - Voltar");
+            System.out.print("Escolha uma opção: ");
+            int opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    executarBuscaProfundidade(scanner, grafo);
+                    break;
+                case 2:
+                    executarBuscaLargura(scanner, grafo);
+                    break;
+                case 3:
+                    return;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    private static void executarBuscaProfundidade(Scanner scanner, Grafo grafo) {
+        Busca busca = new Busca();
+        System.out.print("Informe o rótulo do vértice de início: ");
+        String rotuloInicio = scanner.nextLine();
+        Vertice inicio = grafo.getVertices().stream()
+                .filter(v -> v.getRotulo().equals(rotuloInicio))
+                .findFirst()
+                .orElse(null);
+
+        if (inicio == null) {
+            System.out.println("Vértice não encontrado.");
+            return;
+        }
+
+        System.out.println("Busca em Profundidade (DFS):");
+        busca.executarDFS(grafo, inicio);
+    }
+
+    private static void executarBuscaLargura(Scanner scanner, Grafo grafo) {
+        Busca busca = new Busca();
+        System.out.print("Informe o rótulo do vértice de início: ");
+        String rotuloInicio = scanner.nextLine();
+        Vertice inicio = grafo.getVertices().stream()
+                .filter(v -> v.getRotulo().equals(rotuloInicio))
+                .findFirst()
+                .orElse(null);
+
+        if (inicio == null) {
+            System.out.println("Vértice não encontrado.");
+            return;
+        }
+
+        System.out.println("Busca em Largura (BFS):");
+        busca.executarBFS(grafo, inicio);
+    }
 }
